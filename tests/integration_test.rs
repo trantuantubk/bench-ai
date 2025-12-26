@@ -11,9 +11,7 @@ async fn spawn_app() -> String {
     let address = format!("http://127.0.0.1:{}", port);
 
     tokio::spawn(async move {
-        bench_ai::run(listener)
-            .await
-            .expect("Failed to run server");
+        bench_ai::run(listener).await.expect("Failed to run server");
     });
     // Give the server a moment to start
     sleep(Duration::from_millis(100)).await;

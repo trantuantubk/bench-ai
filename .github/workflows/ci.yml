@@ -20,27 +20,27 @@ jobs:
       - name: Run tests
         run: cargo test --verbose
     
-    fmt:
-      name: Format
-      runs-on: ubuntu-24.04
-      steps:
-        - uses: actions/checkout@v4
-        - uses: dtolnay/rust-toolchain@stable
-          with:
-            components: rustfmt
-        - name: Check formatting
-          run: cargo fmt --all -- --check
-    clippy:
-      name: Clippy
-      runs-on: ubuntu-24.04
-      steps:
-        - uses: actions/checkout@v4
-        - uses: dtolnay/rust-toolchain@stable
-          with:
-            components: clippy
-        - uses: Swatinem/rust-cache@v2
-        - name: Run clippy
-          run: cargo clippy - -D warnings
+  fmt:
+    name: Format
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Run clippy
+        run: cargo clippy - -D warnings
 
 
 
