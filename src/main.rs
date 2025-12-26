@@ -8,5 +8,5 @@ async fn main() {
 
     bench_ai::run(listener)
         .await
-        .expect("Fail to run server"); 
+        .expect("Fail to run server!"); 
 }
