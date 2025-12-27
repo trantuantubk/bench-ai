@@ -1,4 +1,5 @@
 pub mod handlers;
+pub mod models;
 
 use axum::{Router, routing::get};
 use tokio::net::TcpListener;

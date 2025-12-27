@@ -6,9 +6,10 @@ fn test_valid_model_creation() {
     let name = "resnet50".to_string();
     let framework = "onnx".to_string();
     let version = "1.0".to_string();
-
+    
     // Act
-    let model = Model::new(name.clone(), framework.clone(), version.clone()).expect("valid model");
+    let model = Model::new(name.clone(), framework.clone(), version.clone())
+        .expect("valid model");
 
     // Assert
     assert_eq!(model.name(), &name);
@@ -24,6 +25,7 @@ fn test_model_validation_empty_name() {
     // Assert
     assert!(result.is_err());
     assert!(result.unwrap_err().contains("name cannot be empty"));
+
 }
 
 #[test]
@@ -32,10 +34,11 @@ fn test_model_validation_invalid_framework() {
     let result = Model::new(
         "resnet50".to_string(),
         "invalid".to_string(),
-        "1.0".to_string(),
+        "1.0".to_string()
     );
 
     // Assert
     assert!(result.is_err());
     assert!(result.unwrap_err().contains("Unsupported framework"));
+
 }
