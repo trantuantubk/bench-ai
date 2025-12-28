@@ -36,3 +36,57 @@ async fn health_check_works() {
     let body = response.text().await.expect("Failed to read response body");
     assert!(body.contains("ok"));
 }
+
+#[tokio::test]
+async fn create_model_returns_201() {
+    // Arrange
+    let address = spawn_app().await;
+    let client = reqwest::Client::new();
+    let model_data = serde_json::json!({
+        "name": "resnet50",
+        "framework": "onnx",
+        "version": "1.0"
+    });
+
+    // Act
+    let response = client
+        .post(&format!("{}/models", address))
+        .json(&model_data)
+        .send()
+        .await
+        .expect("Fail to execute request");
+    
+    // Assert 
+    assert_eq!(response.status().as_u16(), 201);
+
+    let body: serde_json::Value = response.json()
+                                        .await
+                                        .expect("Failed to parse JSON");
+    assert!(body.get("id").is_some());
+    assert_eq!(body["name"], "resnet50");
+    assert_eq!(body["framework"], "onnx");
+    assert_eq!(body["version"], "1.0");
+}
+
+#[tokio::test]
+async fn create_model_validates_input() {
+    // Arrange
+    let address = spawn_app().await;
+    let client = reqwest::Client::new();
+
+    let invalid_model = serde_json::json!({
+        "name": "", //Empty name should fail
+        "framework": "onnx",
+        "version": "1.0"
+    });
+
+    // Act
+    let response = client
+        .post(&format!("{}/models", address))
+        .json(&invalid_model)
+        .send()
+        .await.expect("Failed to execute request");
+    
+    // Assert
+    assert_eq!(response.status().as_u16(), 400); // Bad request
+}
