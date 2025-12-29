@@ -1,7 +1,11 @@
+use serde::{Deserialize, Serialize};
 use std::fmt;
+use uuid::Uuid;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Model {
+    #[serde(default = "Uuid::new_v4")]
+    id: Uuid,
     name: String,
     framework: String,
     version: String,
@@ -43,10 +47,15 @@ impl Model {
         }
 
         Ok(Model {
+            id: Uuid::new_v4(),
             name: name.trim().to_string(),
             framework: framework.to_lowercase(),
             version: version.trim().to_string(),
         })
+    }
+
+    pub fn id(&self) -> &Uuid {
+        &self.id
     }
 
     pub fn name(&self) -> &str {
@@ -60,4 +69,5 @@ impl Model {
     pub fn version(&self) -> &str {
         &self.version
     }
+
 }
