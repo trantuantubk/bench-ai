@@ -1,10 +1,11 @@
+---
 name: CI
 
-on:
+'on':
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main, develop]
 
 env:
   CARGO_TERM_COLOR: always
@@ -12,14 +13,13 @@ env:
 jobs:
   test:
     name: Test
-    runs-on: Ubuntu-24.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Run tests
         run: cargo test --verbose
-    
   fmt:
     name: Format
     runs-on: ubuntu-24.04
@@ -41,6 +41,3 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: Run clippy
         run: cargo clippy -- -D warnings
-
-
-
