@@ -55,13 +55,11 @@ async fn create_model_returns_201() {
         .send()
         .await
         .expect("Fail to execute request");
-    
-    // Assert 
+
+    // Assert
     assert_eq!(response.status().as_u16(), 201);
 
-    let body: serde_json::Value = response.json()
-                                        .await
-                                        .expect("Failed to parse JSON");
+    let body: serde_json::Value = response.json().await.expect("Failed to parse JSON");
     assert!(body.get("id").is_some());
     assert_eq!(body["name"], "resnet50");
     assert_eq!(body["framework"], "onnx");
@@ -85,8 +83,9 @@ async fn create_model_validates_input() {
         .post(&format!("{}/models", address))
         .json(&invalid_model)
         .send()
-        .await.expect("Failed to execute request");
-    
+        .await
+        .expect("Failed to execute request");
+
     // Assert
     assert_eq!(response.status().as_u16(), 400); // Bad request
 }

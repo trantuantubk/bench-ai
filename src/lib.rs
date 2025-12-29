@@ -1,7 +1,10 @@
 pub mod handlers;
 pub mod models;
 
-use axum::{routing::{get, post}, Router};
+use axum::{
+    Router,
+    routing::{get, post},
+};
 use tokio::net::TcpListener;
 
 pub async fn run(listener: TcpListener) -> Result<(), std::io::Error> {

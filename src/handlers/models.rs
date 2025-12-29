@@ -1,6 +1,6 @@
-use axum::{http::StatusCode, Json};
-use serde::{Deserialize, Serialize};
 use crate::models::Model;
+use axum::{Json, http::StatusCode};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize)]
 pub struct CreateModelRequest {

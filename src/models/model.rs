@@ -69,5 +69,4 @@ impl Model {
     pub fn version(&self) -> &str {
         &self.version
     }
-
 }
